@@ -1,0 +1,14 @@
+#Включення режиму перезапису URL
+RewriteEngine On
+#Перенаправлення усіх запитів на HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#Видалення розширення .php из URL
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [NC,L]
+# Захист файлів .htaccess та passwords.txt
+<Files .htaccess|"Security/passwords.txt">
+    Order Allow,Deny
+    Deny from all
+</Files>
